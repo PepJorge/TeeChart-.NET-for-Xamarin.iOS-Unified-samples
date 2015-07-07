@@ -60,6 +60,18 @@ namespace Sample_Unified
                 (Chart.Series[i] as Steema.TeeChart.Styles.Line).Pointer.Pen.Visible = false;
             }
 
+            Chart.Axes.Left.Title.Text = "This is a title";
+            Chart.Axes.Left.Title.Angle = 90;
+            Chart.Axes.Left.Title.Visible = true;
+
+            Chart.Axes.Right.Title.Text = "This is a title";
+            Chart.Axes.Right.Title.Angle = 90;
+            
+
+
+            (Chart.Series[0] as Steema.TeeChart.Styles.Line).VertAxis = Steema.TeeChart.Styles.VerticalAxis.Both;
+
+          //  Chart.Panel.Transparent = true;
             View.AddSubview(Chart);
         }
 
