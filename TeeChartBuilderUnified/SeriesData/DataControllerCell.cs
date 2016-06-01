@@ -1,12 +1,7 @@
 using System;
 using System.Drawing;
-#if __UNIFIED__
 using Foundation;
 using UIKit;
-#else
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
-#endif
 
 namespace TeeChartBuilder
 {
@@ -16,7 +11,6 @@ namespace TeeChartBuilder
 
 		public DataControllerCell () : base (UITableViewCellStyle.Value1, Key)
 		{
-			// TODO: add subviews to the ContentView, set various colors, etc.
 			TextLabel.Text = "TextLabel";
 		}
 	}

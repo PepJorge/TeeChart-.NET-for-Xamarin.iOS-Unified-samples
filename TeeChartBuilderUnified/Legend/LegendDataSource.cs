@@ -1,11 +1,6 @@
 using System;
-#if __UNIFIED__
 using UIKit;
 using Foundation;
-#else
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
-#endif
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -123,11 +118,7 @@ namespace TeeChartBuilder
 			_items.Add(item8);
 		}
 		
-#if __UNIFIED__
 	public override string TitleForHeader(UITableView tableView, nint section)
-#else
-	public override string TitleForHeader(UITableView tableView, int section)
-#endif
 		{
 			if (section == 0)
 			return "Legend Settings";
@@ -135,11 +126,7 @@ namespace TeeChartBuilder
 			    return "Legend settings";
 		}
 		
-#if __UNIFIED__
 		public override nint RowsInSection(UITableView tableview, nint section)
-#else
-		public override int RowsInSection(UITableView tableview, int section)
-#endif
 		{
 			if (section == 0)
 				return 6;
@@ -147,11 +134,7 @@ namespace TeeChartBuilder
 			    return 4;
 		}
 
-#if __UNIFIED__
         public override nint NumberOfSections(UITableView tableView)
-#else
-        public override int NumberOfSections(UITableView tableView)
-#endif
         {
 			return 1;
 		}

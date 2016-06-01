@@ -1,12 +1,7 @@
 using System;
 using System.Drawing;
-#if __UNIFIED__
 using Foundation;
 using UIKit;
-#else
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
-#endif
 using Steema.TeeChart;
 
 namespace TeeChartBuilder
@@ -28,8 +23,6 @@ namespace TeeChartBuilder
 		{
 			// Releases the view if it doesn't have a superview.
 			base.DidReceiveMemoryWarning ();
-			
-			// Release any cached data, images, etc that aren't in use.
 		}
 		
 		public override void ViewDidLoad ()

@@ -1,24 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-#if __UNIFIED__
 using Foundation;
 using UIKit;
 using AddressBook;
 using CoreTelephony;
 using ObjCRuntime;
 using MessageUI;
-#else
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
-using MonoTouch.AddressBook;
-using MonoTouch.CoreTelephony;
-using MonoTouch.ObjCRuntime;
-using MonoTouch.MessageUI;
-#endif
-#if !__UNIFIED__
-using MonoTouch.Dialog;
-#endif
+using CoreGraphics;
 using Steema.TeeChart;
 using System.Drawing;
 using TeeChartBuilder.SeriesData;
@@ -28,11 +17,6 @@ namespace TeeChartBuilder
 	public partial class ChartViewController : UIViewController
 	{
 		public TChart chart= new Steema.TeeChart.TChart();
-#if __UNIFIED__
-        public CoreGraphics.CGRect mainChartFrame;
-#else
-        public System.Drawing.RectangleF mainChartFrame;
-#endif
         SettingsController controller;
 		DataControllerController datacontroller;
 
@@ -59,21 +43,6 @@ namespace TeeChartBuilder
 
 		void Initialize ()
 		{		
-
-#if __UNIFIED__
-			BottomBar = new UIToolbar (new CoreGraphics.CGRect (0,this.View.Frame.Height-85,
-				this.View.Frame.Width,50));
-
-			mainChartFrame = new CoreGraphics.CGRect(0,0,this.View.Bounds.Width,this.View.Bounds.Height);						
-#else
-			BottomBar = new UIToolbar (new RectangleF (0,this.View.Frame.Height-85,
-				this.View.Frame.Width,50));
-
-			mainChartFrame = new System.Drawing.RectangleF(0,0,this.View.Bounds.Width,this.View.Bounds.Height);						
-#endif
-			chart.Frame = mainChartFrame;
-			chart.ClipsToBounds = true;
-			
 			UIDevice.CurrentDevice.BatteryMonitoringEnabled=true;
 			float bLevel = UIDevice.CurrentDevice.BatteryLevel;			
 			
@@ -84,26 +53,23 @@ namespace TeeChartBuilder
 			series1.Markers[2].Text= "Battery Level";
 			series1.Markers[1].AllowEdit=true;
 			series1.Markers[1].Text= "Percentage";
-			
-			Steema.TeeChart.Themes.BlackIsBackTheme theme = new Steema.TeeChart.Themes.BlackIsBackTheme(chart.Chart);
-			//theme.Apply();
+
+			// Apply theme if desired
+			Steema.TeeChart.Themes.AndrosTheme theme = new Steema.TeeChart.Themes.AndrosTheme(chart.Chart);
+			theme.Apply();
 			Steema.TeeChart.Themes.ColorPalettes.ApplyPalette(chart.Chart,Steema.TeeChart.Themes.Theme.OnBlackPalette);		
 			chart.Aspect.ClipPoints=true;
+
 			chart.Panning.Allow = Steema.TeeChart.ScrollModes.Horizontal;
+			chart.Panning.Active = true;
+			chart.Zoom.Active = true;
 							
-			this.View.AddSubview(chart);	
-		
-
-
 			UIBarButtonItem btn1 = new UIBarButtonItem();
 			btn1.Style = UIBarButtonItemStyle.Bordered;
 			btn1.Title = "Data";
 			btn1.Clicked += delegate(object sender, EventArgs e) {
-				//Console.WriteLine( "Data" );
-
 				datacontroller = new SeriesData.DataControllerController(chart,this,chart.Series[0] is Steema.TeeChart.Styles.Custom3D);			  
 				NavigationController.PushViewController(datacontroller,true);
-
 			};
 
 			UIBarButtonItem btnSpace = new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace);
@@ -111,14 +77,12 @@ namespace TeeChartBuilder
 			UIBarButtonItem btn2 = new UIBarButtonItem(UIBarButtonSystemItem.Action);
 			btn2.Style = UIBarButtonItemStyle.Bordered;
 			btn2.Title = "";
-			btn2.Clicked += delegate(object sender, EventArgs e) {
-
+			btn2.Clicked += delegate(object sender, EventArgs e) 
+			{
 				var actionSheet = new UIActionSheet ("Options", null, "Cancel", "Camera roll", "Send by mail", "Print"){
 					Style = UIActionSheetStyle.Default
 				};
 				actionSheet.Clicked += delegate (object sender1, UIButtonEventArgs args){
-					//Console.WriteLine ("Clicked on item {0}", args.ButtonIndex);
-
 					switch (args.ButtonIndex)
 					{
 					case 0:
@@ -132,45 +96,26 @@ namespace TeeChartBuilder
 						break;
 					}
 				};
-
 				actionSheet.ShowInView (View);
 			};
 
-			BottomBar.SetItems( new UIBarButtonItem[] { btn1, btnSpace, btn2 }, false );
+			BottomBar =	new UIToolbar(new CoreGraphics.CGRect (0,this.View.Frame.Height-22,
+				this.View.Frame.Width,44))
+			{
+				Translucent = false,
+				Items = new UIBarButtonItem[]
+				{
+					btn1,
+					btnSpace,
+					btn2
+				}
+			};
 
-			BottomBar.TintColor = UIColor.Black;
-			this.View.AddSubview (BottomBar);
+			this.View.AddSubview(chart);
+			this.View.AddSubview(BottomBar);
+			chart.ClipsToBounds = true;
 
 			UIDevice.CurrentDevice.BatteryMonitoringEnabled=false;
-
-			/*
-			// Grab The Context
-			UIGraphics.BeginImageContext ( this.View.Frame.Size);
-			var ctx = UIGraphics.GetCurrentContext ();
-			
-			// Render in the context
-			this.View.Layer.RenderInContext(ctx);
-			 
-			// Lets grab a UIImage of the current graphics context
-			UIImage i = UIGraphics.GetImageFromCurrentImageContext();
-			
-			// Set this to your desktop, ie change the martinbowling part
-			string png = "/Users/steema/Desktop/chartxx.png";
-			// Get the Image as a PNG
-			NSData imgData = i.AsPNG();
-			NSError err = null;
-			if (imgData.Save(png, false, out err))
-			{
-				// Console.WriteLine("saved as " + png);
-			} 
-			else 
-			{
-			 	// Console.WriteLine("NOT saved as" + png + 
-			    //                " because" + err.LocalizedDescription);
-			}
-			
-			UIGraphics.EndImageContext ();			
-			*/			
 		}
 		
 		#endregion
@@ -191,11 +136,7 @@ namespace TeeChartBuilder
 				img.SaveToPhotosAlbum(
 					(sender, args)=>{
 					Console.WriteLine("image saved to Photos");
-					//AlertCenter.Default.PostMessage ("Chart saved!", "The Chart has been saved to CameraRoll.",
-					  //                               UIImage.FromFile ("SeriesIcons/bar.png"), delegate {
-//					});
 					}
-
 				);
 			}
 			else
@@ -220,16 +161,15 @@ namespace TeeChartBuilder
 					_mail = new MFMailComposeViewController ();
 				
 					_mail.AddAttachmentData (img.AsPNG (), "image/png", "image.png");
-					_mail.SetSubject ("Chart from TeeChart Office for iPhone");
+					_mail.SetSubject ("Chart from TeeChart Builder for iPhone");
 
-					_mail.SetMessageBody ("This is the Chart sent through TeeChart app.", 
-				                      false);
+					_mail.SetMessageBody ("This is the Chart sent through TeeChart app.", false);
 					_mail.Finished += HandleMailFinished;
 
 					this.PresentModalViewController (_mail, true);
 
 				} else {
-				// handle not being able to send mail
+				    // handle not being able to send mail
 				}
 			}
 		}
@@ -270,14 +210,9 @@ namespace TeeChartBuilder
 			});
 		}
 
-		//private NSObject notificationObserver;
-
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-
-			//notificationObserver  = NSNotificationCenter.DefaultCenter
-			//	.AddObserver("UIDeviceOrientationDidChangeNotification", DeviceRotated );
 
 			UIBarButtonItem button= new UIBarButtonItem();
 			button.Title = "Settings";
@@ -294,7 +229,6 @@ namespace TeeChartBuilder
 		public override void ViewDidAppear (bool animated)
 		{
 			UIDevice.CurrentDevice.BeginGeneratingDeviceOrientationNotifications();
-			CheckPositions ();
 		}
 
 		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations ()
@@ -307,33 +241,12 @@ namespace TeeChartBuilder
 			CheckPositions();
 		}
 
-		//iOS 5 support
-		//if I don't put it it doesn't work for iOS 5 device but works on iOS 6 simulator
-		[Obsolete ("Deprecated in iOS6. Replace it with both GetSupportedInterfaceOrientations and PreferredInterfaceOrientationForPresentation")]
-		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
-		{
-			return true;
-		}
-
 		private void CheckPositions()
 		{
 			// Refresh Chart rotating the device
 			chart.RemoveFromSuperview ();
-#if __UNIFIED__
-			CoreGraphics.CGRect f = new CoreGraphics.CGRect(View.Frame.X,50,View.Frame.Width,View.Frame.Height-BottomBar.Frame.Height-50);
-#else
-			RectangleF f = new RectangleF(View.Frame.X,50,View.Frame.Width,View.Frame.Height-BottomBar.Frame.Height-50);
-#endif
-			chart.Frame = f;
 			View.AddSubview (chart);			
 			chart.DoInvalidate ();		
-
-#if __UNIFIED__
-            BottomBar.Frame  = new CoreGraphics.CGRect (0,View.Frame.Height-50,
-#else
-            BottomBar.Frame  = new RectangleF (0,View.Frame.Height-50,
-#endif
-				this.chart.Frame.Width,50);
 		}
 
 		public override void DidRotate(UIInterfaceOrientation fromInterfaceOrientation)

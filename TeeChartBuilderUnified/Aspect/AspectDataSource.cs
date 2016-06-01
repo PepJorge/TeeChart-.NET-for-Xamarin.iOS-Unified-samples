@@ -1,11 +1,6 @@
 using System;
-#if __UNIFIED__
 using UIKit;
 using Foundation;
-#else
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
-#endif
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -30,7 +25,6 @@ namespace TeeChartBuilder
 			InitAdvanced();
 		}
 		
-
 		private void InitAdvanced()
 		{
 			// A switcher View3D
@@ -55,7 +49,6 @@ namespace TeeChartBuilder
 				_parentController.chart.Chart.Aspect.Chart3DPercent = (int)slider3DPercent.Value;
 			};
 			item3DPercent.ContentView = slider3DPercent;			
-			
 			
 			// ZoomScrollStyle automatic
 			AspectItem itemZoomScroll = new AspectItem("ZoomScroll Auto","",UITableViewCellStyle.Default,UITableViewCellAccessory.None);
@@ -112,30 +105,18 @@ namespace TeeChartBuilder
 			_items.Add(itemRotation);
 		}
 		
-#if __UNIFIED__
 	    public override string TitleForHeader(UITableView tableView, nint section)
-#else
-	    public override string TitleForHeader(UITableView tableView, int section)
-#endif
 		{
 		    return "Aspect settings";
 		}
 					
-#if __UNIFIED__
-        public override nint RowsInSection(UITableView tableview, nint section)
-#else
-        public override int RowsInSection(UITableView tableview, int section)
-#endif
+        public override nint RowsInSection(UITableView tableView, nint section)
 		{
 			    return 5;
 		}
 
-#if __UNIFIED__
         public override nint NumberOfSections(UITableView tableView)
-#else
-        public override int NumberOfSections(UITableView tableView)
-#endif
-{
+        {
 			return 1;
 		}
 		

@@ -1,12 +1,6 @@
 using System;
-#if __UNIFIED__
 using UIKit;
 using Foundation;
-#else
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
-using MonoTouch.CoreText;
-#endif
 using System.Collections.Generic;
 using Steema.TeeChart;
 using Steema.TeeChart.Styles;
@@ -40,20 +34,19 @@ namespace TeeChartBuilder
 
 		private void chart_AfterDraw(object sender, Steema.TeeChart.Drawing.Graphics3D g) 
 		{
-			/*
+			/* Checking OnAfterDraw event
 			_controller.chart.Canvas.TextOut(100,100,"hello");
 			_controller.chart.Graphics3D.Pen.Color = UIColor.Yellow.CGColor;
 			_controller.chart.Graphics3D.Pen.Width=3;
 			_controller.chart.Canvas.Line(0,0,100,100);
 			*/
 		}				
-
-
-		/*private bool chart_clickBackGround(UIGestureRecognizer recognizer, UITouch touch) 
+			
+		private bool chart_clickBackGround(UIGestureRecognizer recognizer, UITouch touch) 
 		{
-			//Console.WriteLine("BackGround clicked");
+			Console.WriteLine("BackGround clicked");
 			return false;
-		}*/
+		}
 		
 		private void series_clicked(object sender, Steema.TeeChart.Styles.Series s, int valueIndex, UIGestureRecognizer e) 
 		{
@@ -65,26 +58,23 @@ namespace TeeChartBuilder
 			// Clear Views if World demo has been clicked
 			if (_controller.chartController.View.Subviews.Length>1)
 			{
-			//  _controller.chartController.View.Subviews[1].RemoveFromSuperview();
-			  _controller.chart.Frame = _controller.chartController.mainChartFrame;		
+				//if (_controller.View.Subviews.Length>1)
+			    //  _controller.chartController.View.Subviews[1].RemoveFromSuperview();
+				_controller.chart.Frame = new CoreGraphics.CGRect (0,0, _controller.chartController.View.Frame.Width,_controller.chartController.View.Frame.Height-44);	
 			}
-			// Uncheck the previous row
-			//if (_previousRow != null)
-			//	tableView.CellAt(_previousRow).Accessory = UITableViewCellAccessory.None;
-			
 			// Do something with the row
 			var row = indexPath.Row;
 			Settings.SelectedIndex = row;
-			//tableView.CellAt(indexPath).Accessory = UITableViewCellAccessory.Checkmark;
-			
-			// Changes Series type
+
+			// Changes Series typea
 			_controller.chart.Series.Clear();
 			
 			// Set some chart options to improve speed
 			_controller.chart.Clear();
-			
-			Steema.TeeChart.Themes.BlackIsBackTheme theme = new Steema.TeeChart.Themes.BlackIsBackTheme(_controller.chart.Chart);
-			//theme.Apply();
+
+			// Apply theme is desired
+			Steema.TeeChart.Themes.AndrosTheme theme = new Steema.TeeChart.Themes.AndrosTheme(_controller.chart.Chart);
+			theme.Apply();
 			Steema.TeeChart.Themes.ColorPalettes.ApplyPalette(_controller.chart.Chart,Steema.TeeChart.Themes.Theme.OnBlackPalette);	
 			
 			_controller.chart.Axes.Bottom.Grid.Visible = false;
@@ -93,289 +83,88 @@ namespace TeeChartBuilder
 			_controller.chart.Axes.Bottom.MinorTicks.Visible = false;
 			_controller.chart.Header.Visible = false;			
 			_controller.chart.Legend.Visible = false;
-			_controller.chart.Aspect.View3D = true;					
+			_controller.chart.Aspect.View3D = true;			
+			_controller.chart.Panning.Active = true;
+			_controller.chart.Panning.Allow = ScrollModes.Both;
+			_controller.chart.Zoom.Active = true;
+			_controller.chart.Axes.Left.AxisPen.Width = 1;
+			_controller.chart.Axes.Bottom.AxisPen.Width = 1;
+
+			// Using the ClickBackground event
 			//_controller.chart.ClickBackground += new UITouchEventArgs(chart_clickBackGround);
-			//_controller.chart.Aspect.ZoomScrollStyle = Steema.TeeChart.Drawing.Aspect.ZoomScrollStyles.Manual;
- 
+
 			string ss = tableView.CellAt (indexPath).TextLabel.Text;
 			Console.WriteLine (tableView.CellAt (indexPath).TextLabel.Text);
 
-			if (_controller.newChart) {
+			_controller.chart.Series.Add (Utils.getSeriesStyle (row));
+			_controller.chart.Series [0].Marks.Font.Color = Color.Black;
+			_controller.chart.Series [0].Clear ();
 
-				switch (row) {
-				case 0:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Line());
-					break;
-				case 1:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Points ());
-					break;
-				case 2:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Area ());
-					break;
-				case 3:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.FastLine ());
-					break;
-				case 4:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.HorizLine ());
-					break;
-				case 5:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Bar ());
-					break;
-				case 6:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.HorizBar ());
-					break;
-				case 7:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Pie ());
-					break;
-				case 8:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Shape ());
-					break;
-				case 9:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Arrow ());
-					break;
-				case 10:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Bubble ());
-					break;
-				case 11:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Gantt ());
-					break;
-				case 12:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Candle ());
-					break;
-				case 13:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Donut ());
-					break;
-				case 14:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Volume ());
-					break;
-				case 15:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Bar3D ());
-					break;
-				case 16:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Points3D ());
-					break;
-				case 17:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Polar ());
-					break;
-				case 18:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.PolarBar ());
-					break;
-				case 19:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Radar ());
-					break;
-				case 20:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Clock ());
-					break;
-				case 21:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.WindRose ());
-					break;
-				case 22:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Pyramid ());
-					break;
-				case 23:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Surface ());
-					break;
-				case 24:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.LinePoint ());
-					break;
-				case 25:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.BarJoin ());
-					break;
-				case 26:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.ColorGrid ());
-					break;
-				case 27:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Waterfall ());
-					break;
-				case 28:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Histogram ());
-					break;
-				case 29:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Error ());
-					break;
-				case 30:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.ErrorBar ());
-					break;
-				case 31:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Contour ());
-					break;
-				case 32:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Smith ());
-					break;
-				case 33:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Bezier ());
-					break;
-				case 34:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Calendar ());
-					break;
-				case 35:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.HighLow ());
-					break;
-				case 36:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.TriSurface ());
-					break;
-				case 37:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Funnel ());
-					break;
-				case 38:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Box ());
-					break;
-				case 39:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.HorizBox ());
-					break;
-				case 40:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.HorizArea ());
-					break;
-				case 41:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Tower ());
-					break;
-				case 42:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.PointFigure ());
-					break;
-				case 43:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Gauges ());
-					break;
-				case 44:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Vector3D ());
-					break;
-				case 45:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.HorizHistogram ());
-					break;
-				case 46:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Map ());
-					break;
-				case 47:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.ImageBar ());
-					break;
-				case 48:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Kagi ());
-					break;
-				case 49:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Renko ());
-					break;
-				case 50:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.IsoSurface ());
-					break;
-				case 51:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Darvas ());
-					break;
-				case 52:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.VolumePipe ());
-					break;
-				case 53:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.ImagePoint ());
-					break;
-				case 54:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.CircularGauge ());
-					break;
-				case 55:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.LinearGauge ());
-					break;
-				case 56:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.VerticalLinearGauge ());
-					break;
-				case 57:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.NumericGauge ());
-					break;
-				case 58:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.OrgSeries ());
-					break;
-				case 59:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.TagCloud ());
-					break;
-				case 60:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.PolarGrid ());
-					break;
-				case 61:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Ternary ());
-					break;
-				case 62:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.KnobGauge ());
-					break;
-				case 63:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.World ());
-					break;
-				default:
-					break;
-				}
-
+			if (_controller.newChart) {				
 				tableView.DeselectRow (indexPath, false);
 				_controller.NavigationController.PushViewController (_controller.chartController, true);	
 			} else {
 				switch (row) {
-				case 0:
-					Steema.TeeChart.Styles.Line line1 = new Steema.TeeChart.Styles.Line ();
-					_controller.chart.Series.Add (line1);
+				case 0:  // Line  
 					_controller.chart.Aspect.View3D = false;
-					_controller.chart.Chart.Invalidate ();
 					Random Rnd = new Random ();
-					_controller.chart.Aspect.View3D = false;
-					for (int t = 0; t <= 20; ++t)
-						line1.Add (t, ((Rnd.Next (100)) + 1) - ((Rnd.Next (70)) + 1));
+					for (int t = 0; t <= 5; ++t)
+						(_controller.chart [0] as Line).Add (t, ((Rnd.Next (100)) + 1) - ((Rnd.Next (70)) + 1));
 
-                    _controller.chart.Axes.Left.AxisPen.Color = Color.White;
+					_controller.chart.Axes.Left.AxisPen.Color = Color.White;
 					_controller.chart.Axes.Bottom.AxisPen.Color = Color.White;
-					_controller.chart.Axes.Left.AxisPen.Width = 1;
-					_controller.chart.Axes.Bottom.AxisPen.Width = 1;
-                    _controller.chart.Panning.Active = true;
-                    _controller.chart.Zoom.Active = true;
-				//line1.BeforeDrawValues += new Steema.TeeChart.Styles.Series.PaintChartEventHandler(line1_BeforeDrawValues);				
-					break;
-				case 1:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Points ());
+
+                    _controller.chart.Panel.Gradient.Visible = false;
+                    //_controller.chart.Panel.Gradient.EndColor = Color.DimGray;
+
+                    (_controller.chart[0] as Line).LinePen.Width = 3;
+                    (_controller.chart[0] as Line).Color = Color.DarkBlue;
+                    // Using the OnBeforeDrawValues event
+                    //line1.BeforeDrawValues += new Steema.TeeChart.Styles.Series.PaintChartEventHandler(line1_BeforeDrawValues);				
+                        break;
+				case 1:  // Points
 					_controller.chart.Series [0].FillSampleValues (100);
 					break;
-				case 2:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Area ());	
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Area ());	
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Area ());	
-					_controller.chart.Series [0].FillSampleValues (5);
-					_controller.chart.Series [1].FillSampleValues (5);
-					_controller.chart.Series [2].FillSampleValues (5);
+				case 2: // Area
 					_controller.chart.Aspect.View3D = false;
-					Steema.TeeChart.Styles.Area area1 = _controller.chart.Series [0] as Steema.TeeChart.Styles.Area;
-					Steema.TeeChart.Styles.Area area2 = _controller.chart.Series [1] as Steema.TeeChart.Styles.Area;
-					Steema.TeeChart.Styles.Area area3 = _controller.chart.Series [2] as Steema.TeeChart.Styles.Area;
-					area1.Transparency = 40;
-					area2.Transparency = 40;
-					area3.Transparency = 40;	
+					_controller.chart.Series [0].FillSampleValues (5);
+					for (int i = 1; i < 3; i++) {
+						_controller.chart.Series.Add (new Steema.TeeChart.Styles.Area ());	
+						_controller.chart.Series [i].FillSampleValues (5);
+						(_controller.chart.Series [i] as Steema.TeeChart.Styles.Area).Transparency = 40;
+					}
 					break;
-				case 3:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.FastLine ());
+				case 3: // FastLine
 					_controller.chart.Aspect.View3D = false;
 					_controller.chart.Series [0].FillSampleValues (400);
 					break;
-				case 4:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.HorizLine ());
-					_controller.chart.Series [0].FillSampleValues (8);
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.HorizLine ());
-					_controller.chart.Series [1].FillSampleValues (8);
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.HorizLine ());
-					_controller.chart.Series [2].FillSampleValues (8);
+				case 4: // HorizLine
+					_controller.chart.Series[0].FillSampleValues (8);
+					for (int i = 1; i < 3; i++) {
+						_controller.chart.Series.Add (new Steema.TeeChart.Styles.HorizLine ());
+						_controller.chart.Series [i].FillSampleValues (8);
+					}
 					break;
-				case 5:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Bar ());
-				  
+				case 5: // Bar
 					_controller.chart.Series [0].Add (3, "Pears");
 					_controller.chart.Series [0].Add (4, "Apples");
 					_controller.chart.Series [0].Add (2, "Oranges");
 					_controller.chart.Series [0].Add (7, "Banana");
 				
-					//	_controller.chart.Series[0].Add(5,"Pineapple");
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Bar).Pen.Visible = false;
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Bar).ColorEach = true;
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Bar).Marks.Shadow.Visible = false;
 					_controller.chart.AfterDraw += new Steema.TeeChart.PaintChartEventHandler (chart_AfterDraw);
 					
-					//_controller.chart.GetAxisLabel += new Steema.TeeChart.GetAxisLabelEventHandler(_controller_GetAxisLabel);
 					_controller.chart.Header.Font.Name = "Arial";
 					_controller.chart.Header.Font.Size = 20;
 					_controller.chart.Axes.Bottom.Labels.Angle = 45;
-					
+
+					// Here using the Chart events
+					//_controller.chart.GetAxisLabel += new Steema.TeeChart.GetAxisLabelEventHandler(_controller_GetAxisLabel);								
 					//_controller.chart.ClickSeries += new Steema.TeeChart.TChart.SeriesEventHandler (series_clicked);
 					break;
-				case 6:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.HorizBar ());
+				case 6: // HorizBar
 					_controller.chart.Series [0].FillSampleValues (10);
 					_controller.chart.Aspect.View3D = false;
 					Steema.TeeChart.Styles.HorizBar hbar1 = _controller.chart.Series [0] as Steema.TeeChart.Styles.HorizBar;				    
@@ -386,8 +175,7 @@ namespace TeeChartBuilder
 					_controller.chart.Axes.Left.MinimumOffset = 20;
 					_controller.chart.Axes.Left.MaximumOffset = 20;
 					break;
-				case 7:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Pie ());
+				case 7:  // Pie
 					_controller.chart.Series [0].Add (30);
 					_controller.chart.Series [0].Add (30);
 					_controller.chart.Series [0].Add (40);
@@ -395,8 +183,7 @@ namespace TeeChartBuilder
 				
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Pie).Circled = true;
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Pie).EdgeStyle = Steema.TeeChart.Drawing.EdgeStyles.Flat;
-					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Pie).BevelPercent = 15;
-                    (_controller.chart.Series[0] as Steema.TeeChart.Styles.Pie).Marks.Font.Color = Color.FromArgb(255, 255, 255);
+					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Pie).BevelPercent = 15;                    
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Pie).Marks.Font.Size = 10;			
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Pie).ExplodeBiggest = 20;	 		
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Pie).RotationAngle = 25;	 		
@@ -409,37 +196,22 @@ namespace TeeChartBuilder
 				   
 					_controller.chart.Aspect.Chart3DPercent = 40;
 					break;
-				case 8:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Shape ());
-					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Shape).Gradient.Visible = true;
-					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Shape).Style = Steema.TeeChart.Styles.ShapeStyles.Circle;
-					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Shape).Gradient.Visible = true;
-                    (_controller.chart.Series[0] as Steema.TeeChart.Styles.Shape).Gradient.EndColor = Color.FromArgb(255, 0, 0);
-				
-					_controller.chart.Series [0].FillSampleValues ();
+				case 8: // Shape
+					(_controller.chart.Series[0] as Steema.TeeChart.Styles.Shape).Gradient.Visible = true;
+					(_controller.chart.Series[0] as Steema.TeeChart.Styles.Shape).Style = Steema.TeeChart.Styles.ShapeStyles.Circle;
+					(_controller.chart.Series[0] as Steema.TeeChart.Styles.Shape).Gradient.Visible = true;
+                    (_controller.chart.Series[0] as Steema.TeeChart.Styles.Shape).Gradient.EndColor = Color.FromArgb(255, 0, 0);				
 					break;
-				case 9:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Arrow ());
-					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Arrow).ColorEachPoint = true;
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 9: // Arrow
+					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Arrow).ColorEachPoint = true;		
 					break;
-				case 10:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Bubble ());
+				case 10: // Bubble
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Bubble).Pointer.Gradient.Visible = true;
-                    (_controller.chart.Series[0] as Steema.TeeChart.Styles.Bubble).Pointer.Gradient.EndColor = Color.FromArgb(255, 255, 255);	
-					_controller.chart.Series [0].FillSampleValues ();								
+					(_controller.chart.Series[0] as Steema.TeeChart.Styles.Bubble).Pointer.Gradient.StartColor = Color.FromArgb(255, 0, 0);								
+                    (_controller.chart.Series[0] as Steema.TeeChart.Styles.Bubble).Pointer.Gradient.EndColor = Color.FromArgb(255, 255, 255);								
 					break;
-				case 11:
-				/*	_controller.chart.Series.Add(new Steema.TeeChart.Styles.Gantt());
-					_controller.chart.Legend.Visible = true;
-					_controller.chart.Legend.Alignment = Steema.TeeChart.LegendAlignments.Bottom;
-					_controller.chart.Legend.Transparent = true;
-					_controller.chart.Series[0].FillSampleValues();	
-
-*/
-					var progressSeries = new Steema.TeeChart.Styles.Gantt ();
- //bug here pep
-
+				case 11: // Gantt
+					Gantt progressSeries =  _controller.chart.Series[0] as Steema.TeeChart.Styles.Gantt;
 					progressSeries.Add (DateTime.Today, DateTime.Today.AddDays (10.0), 1, "");
 			
 					progressSeries.Pointer.VertSize = 10;
@@ -453,18 +225,10 @@ namespace TeeChartBuilder
 					_controller.chart.Axes.Left.Ticks.Visible = false;
 					_controller.chart.Axes.Left.MinorTicks.Visible = false;
 					_controller.chart.Axes.Left.Visible = false;
-
-				//disable scroll and zoom
-			//	_controller.chart.Chart.Aspect.ZoomScrollStyle = Steema.TeeChart.Drawing.Aspect.ZoomScrollStyles.Manual;
-			//	_controller.chart.Chart.Panning.Allow = ScrollModes.None; 
-			//	_controller.chart.Chart.Zoom.Allow=false;
 					break;
-				case 12:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Candle ());
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 12: // Candle
 					break;
-				case 13:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Donut ());
+				case 13: // Donut
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Donut).Circled = true;
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Donut).Pen.Visible = true;
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Donut).Pen.Width = 8;
@@ -485,102 +249,63 @@ namespace TeeChartBuilder
 					_controller.chart.Panel.MarginTop = 10;
 					_controller.chart.Panel.MarginBottom = 10;			
 					break;
-				case 14:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Volume ());
-					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Volume).LinePen.Width = 2;
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 14: // Volume
+					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Volume).LinePen.Width = 2;			
 					break;
-				case 15:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Bar3D ());
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 15: // Bar3D
 					break;
-				case 16:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Points3D ());
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 16: // Points3D
 					break;
-				case 17:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Polar ());
+				case 17: // Polar
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Polar).Circled = true;
-					//(_controller.chart.Series[0] as Steema.TeeChart.Styles.Polar).Transparency = 10;
-					_controller.chart.Aspect.View3D = false;
-					_controller.chart.Series [0].FillSampleValues ();				
+					_controller.chart.Aspect.View3D = false;			
 					break;
-				case 18:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.PolarBar ());
-					_controller.chart.Aspect.View3D = false;
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 18: // PolarBar
+					_controller.chart.Aspect.View3D = false;			
 					break;
-				case 19:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Radar ());
-					_controller.chart.Aspect.View3D = false;
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 19: // Radar
+					_controller.chart.Aspect.View3D = false;			
 					break;
-				case 20:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Clock ());
-					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Clock).Circled = true;
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 20: // Clock
+					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Clock).Circled = true;			
 					break;
-				case 21:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.WindRose ());
-					_controller.chart.Aspect.View3D = false;
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 21: // WindRose
+					_controller.chart.Aspect.View3D = false;			
 					break;
-				case 22:			
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Pyramid ());
+				case 22: // Pyramid
 					_controller.chart.Series [0].FillSampleValues (4);	
 					break;
-				case 23:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Surface ());
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 23: // Surface
 					break;
-				case 24:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.LinePoint ());
+				case 24: // LinePoint
+					_controller.chart.Aspect.View3D = false;			
+					break;
+				case 25: // BarJoin
+					_controller.chart.Aspect.View3D = false;		
+					break;
+				case 26: // ColorGrid
+					break;
+				case 27: // WaterFall
+					break;
+				case 28: // Histogram
 					_controller.chart.Aspect.View3D = false;
-					_controller.chart.Series [0].FillSampleValues ();				
+					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Histogram).LinesPen.Visible = false;			
 					break;
-				case 25:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.BarJoin ());
-					_controller.chart.Aspect.View3D = false;
-					_controller.chart.Series [0].FillSampleValues ();				
-					break;
-				case 26:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.ColorGrid ());
-					_controller.chart.Series [0].FillSampleValues ();				
-					break;
-				case 27:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Waterfall ());
-					_controller.chart.Series [0].FillSampleValues ();				
-					break;
-				case 28:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Histogram ());
-					_controller.chart.Aspect.View3D = false;
-					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Histogram).LinesPen.Visible = false;
-					_controller.chart.Series [0].FillSampleValues ();				
-					break;
-				case 29:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Error ());
+				case 29: // Error
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Error).ColorEachPoint = true;
-					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Error).ErrorPen.Width = 5;
-					_controller.chart.Series [0].FillSampleValues ();				
+					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Error).ErrorPen.Width = 5;		
 					break;
-				case 30:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.ErrorBar ());
-					(_controller.chart.Series [0] as Steema.TeeChart.Styles.ErrorBar).ColorEachPoint = true;
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 30: // ErrorBar
+					(_controller.chart.Series [0] as Steema.TeeChart.Styles.ErrorBar).ColorEachPoint = true;			
 					break;
-				case 31:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Contour ());
+				case 31: // Contour
+					_controller.chart.Aspect.View3D = false;			
+					break;
+				case 32: // Smith
 					_controller.chart.Aspect.View3D = false;
-					_controller.chart.Series [0].FillSampleValues ();				
+					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Smith).Circled = true;		
 					break;
-				case 32:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Smith ());
-					_controller.chart.Aspect.View3D = false;
-					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Smith).Circled = true;
-					_controller.chart.Series [0].FillSampleValues ();				
-					break;
-				case 33:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Bezier ());
+				case 33: // Bezier
 					_controller.chart.Aspect.View3D = false;
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Bezier).Pointer.Style = Steema.TeeChart.Styles.PointerStyles.Circle;
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Bezier).Pointer.Pen.Visible = false;
@@ -588,40 +313,24 @@ namespace TeeChartBuilder
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Bezier).LinePen.Color = Color.Red;
 					_controller.chart.Series [0].FillSampleValues (4);				
 					break;
-				case 34:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Calendar ());
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 34: // Calendar
 					break;
-				case 35:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.HighLow ());
-					_controller.chart.Aspect.View3D = false;
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 35: // HighLow
+					_controller.chart.Aspect.View3D = false;			
 					break;
-				case 36:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.TriSurface ());
-					_controller.chart.Aspect.View3D = true;
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 36: // TriSurface
 					break;
-				case 37:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Funnel ());
+				case 37: // Funnel
 					_controller.chart.Aspect.View3D = false;
 					_controller.chart.Series [0].FillSampleValues (20);				
 					break;
-				case 38:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Box ());
-					_controller.chart.Series [0].FillSampleValues ();		
+				case 38: // Box
 					break;
-				case 39:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.HorizBox ());
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 39: // HorizBox
 					break;
-				case 40:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.HorizArea ());
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 40: // HorizArea
 					break;
-				case 41:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Tower ());
-					_controller.chart.Aspect.View3D = true;
+				case 41: // Tower
 					_controller.chart.Series [0].FillSampleValues (5);		
 					_controller.chart.Walls.Visible = false;				   
 					_controller.chart.Axes.Bottom.Ticks.Visible = false;
@@ -637,56 +346,34 @@ namespace TeeChartBuilder
 					_controller.chart.Header.Text = "Drag to Rotate the Chart";
 					_controller.chart.Header.Visible = true;
 					break;
-				case 42:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.PointFigure ());
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 42: // PointFigure
 					break;
-				case 43:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Gauges ());
+				case 43: // Gauges
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Gauges).GetVertAxis.Ticks.Length = 15;				
-					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Gauges).GetVertAxis.AxisPen.Color = Color.LightGray;	
-					_controller.chart.Series [0].FillSampleValues ();				
+					(_controller.chart.Series [0] as Steema.TeeChart.Styles.Gauges).GetVertAxis.AxisPen.Color = Color.LightGray;				
 					break;
-				case 44:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Vector3D ());
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 44: // Vector3D
 					break;
-				case 45:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.HorizHistogram ());
+				case 45: // HorizHistogram
 					_controller.chart.Aspect.View3D = false;
-					(_controller.chart.Series [0] as Steema.TeeChart.Styles.HorizHistogram).LinesPen.Visible = false;				
-					_controller.chart.Series [0].FillSampleValues ();				
+					(_controller.chart.Series [0] as Steema.TeeChart.Styles.HorizHistogram).LinesPen.Visible = false;							
 					break;
-				case 46:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Map ());
-					_controller.chart.Aspect.View3D = false;
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 46: // Map
+					_controller.chart.Aspect.View3D = false;			
 					break;
-				case 47:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.ImageBar ());
-					_controller.chart.Series [0].FillSampleValues ();		
-					UIImage img = UIImage.FromFile ("bulb_on.png");
+				case 47: // ImageBar
+					UIImage img = UIImage.FromFile("images/TeeChartNETForIPhone111x80.png");
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.ImageBar).Image = img.CGImage;
 					break;
-				case 48:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Kagi ());
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 48: // Kagi
 					break;
-				case 49:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Renko ());
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 49: // Renko
 					break;
-				case 50:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.IsoSurface ());
-					_controller.chart.Aspect.View3D = true;
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 50: // IsoSurface
 					break;
-				case 51:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Darvas ());
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 51: // Darvas
 					break;
-				case 52:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.VolumePipe ());
+				case 52: // VolumePipe
 					_controller.chart.Aspect.View3D = false;
 					_controller.chart.Legend.Visible = true;
 					_controller.chart.Legend.Transparent = true;
@@ -695,60 +382,44 @@ namespace TeeChartBuilder
 					_controller.chart.Legend.Font.Size = 14;
 					_controller.chart.Series [0].FillSampleValues (4);				
 					break;
-				case 53:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.ImagePoint ());
+				case 53: // ImagePoint
 					_controller.chart.Series [0].FillSampleValues (5);			
 					_controller.chart.Aspect.View3D = false;
-					UIImage img2 = UIImage.FromFile ("bulb_off.png");
+					UIImage img2 = UIImage.FromFile("images/TeeChartNETForIPhone111x80.png");
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.ImagePoint).Pointer.HorizSize = 30;				
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.ImagePoint).Pointer.VertSize = 30;				
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.ImagePoint).PointImage = img2.CGImage;
 					break;
-				case 54:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.CircularGauge ());
-					(_controller.chart.Series [0] as Steema.TeeChart.Styles.CircularGauge).Value = 65;			
+				case 54: // CircularGauge
+					(_controller.chart.Series [0] as Steema.TeeChart.Styles.CircularGauge).Value = 65;                    
+                    break;
+				case 55: // LinearGauge
 					break;
-				case 55:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.LinearGauge ());
-					_controller.chart.Series [0].FillSampleValues ();				
-					break;
-				case 56:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.VerticalLinearGauge ());		
+				case 56: // VerticalLinearGauge
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.VerticalLinearGauge).Axis.Ticks.Visible = true;
-					(_controller.chart.Series [0] as Steema.TeeChart.Styles.VerticalLinearGauge).Axis.MinorTicks.Visible = true;				
-					_controller.chart.Series [0].FillSampleValues ();				
+					(_controller.chart.Series [0] as Steema.TeeChart.Styles.VerticalLinearGauge).Axis.MinorTicks.Visible = true;							
 					break;
-				case 57:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.NumericGauge ());
+				case 57: //NumericGauge
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.NumericGauge).Value = 123;
 					break;
-				case 58:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.OrgSeries ());
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 58: // OrgSeries
 					break;
-				case 59:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.TagCloud ());
+				case 59: // TagCloud
 					_controller.chart.Series [0].FillSampleValues (50);				
 					break;
-				case 60:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.PolarGrid ());
-					_controller.chart.Aspect.View3D = false;
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 60: // PolarGrid
+					_controller.chart.Aspect.View3D = false;		
 					break;
-				case 61:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.Ternary ());
-					_controller.chart.Series [0].FillSampleValues ();				
+				case 61: // Ternary
 					break;
-				case 62:
-					_controller.chart.Series.Add (new Steema.TeeChart.Styles.KnobGauge ());
+				case 62: // KnobGauge
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.KnobGauge).ActiveCenter = true;
 					(_controller.chart.Series [0] as Steema.TeeChart.Styles.KnobGauge).Value = 50;
 					break;
-				case 63:
+				case 63: // Worldaa
 					_controller.chart.Aspect.ZoomScrollStyle = Steema.TeeChart.Drawing.Aspect.ZoomScrollStyles.Manual;
-					Steema.TeeChart.Styles.World world1;
-					_controller.chart.Series.Add (world1 = new Steema.TeeChart.Styles.World ());
-					
+				
+					World world1 =  _controller.chart[0] as World;
 					Steema.TeeChart.Styles.CustomBar wbar;				
 					TChart tChart2 = new TChart (this);	
 					tChart2.Aspect.View3D = false;
@@ -757,13 +428,8 @@ namespace TeeChartBuilder
 					
 					if ((UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeLeft) ||
 						(UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeRight)) {
-#if __UNIFIED__
                         CoreGraphics.CGRect midFrame = new CoreGraphics.CGRect(0, 0, UIScreen.MainScreen.ApplicationFrame.Height / 2, UIScreen.MainScreen.ApplicationFrame.Width - 20);
                         CoreGraphics.CGRect midFrame2 = new CoreGraphics.CGRect(UIScreen.MainScreen.ApplicationFrame.Height / 2, 0, UIScreen.MainScreen.ApplicationFrame.Height / 2, UIScreen.MainScreen.ApplicationFrame.Width - 20);		
-#else
-                        System.Drawing.RectangleF midFrame = new System.Drawing.RectangleF(0, 0, UIScreen.MainScreen.ApplicationFrame.Height / 2, UIScreen.MainScreen.ApplicationFrame.Width - 20);
-                        System.Drawing.RectangleF midFrame2 = new System.Drawing.RectangleF(UIScreen.MainScreen.ApplicationFrame.Height / 2, 0, UIScreen.MainScreen.ApplicationFrame.Height / 2, UIScreen.MainScreen.ApplicationFrame.Width - 20);		
-#endif
                         tChart2.Frame = midFrame2;
                         _controller.chart.Frame = midFrame;
 	
@@ -778,13 +444,8 @@ namespace TeeChartBuilder
 						tChart2.Footer.Visible = true;
 						tChart2.Header.Visible = false;
 					} else {		
-#if __UNIFIED__
                         CoreGraphics.CGRect midFrame = new CoreGraphics.CGRect(0, 0, UIScreen.MainScreen.ApplicationFrame.Width, _controller.chartController.chart.Bounds.Height / 2);
-                        CoreGraphics.CGRect midFrame2 = new CoreGraphics.CGRect(0, _controller.chartController.chart.Bounds.Height, UIScreen.MainScreen.ApplicationFrame.Width, _controller.chartController.chart.Bounds.Height);
-#else
-						System.Drawing.RectangleF midFrame = new System.Drawing.RectangleF (0, 0, UIScreen.MainScreen.ApplicationFrame.Width, _controller.chartController.chart.Bounds.Height / 2);												
-						System.Drawing.RectangleF midFrame2 = new System.Drawing.RectangleF (0, _controller.chartController.chart.Bounds.Height, UIScreen.MainScreen.ApplicationFrame.Width, _controller.chartController.chart.Bounds.Height);
-#endif
+                        CoreGraphics.CGRect midFrame2 = new CoreGraphics.CGRect(0, _controller.chartController.chart.Bounds.Height/2, UIScreen.MainScreen.ApplicationFrame.Width, _controller.chartController.chart.Bounds.Height/2);
 
                         _controller.chart.Frame = midFrame;
 						tChart2.Frame = midFrame2;
@@ -827,7 +488,6 @@ namespace TeeChartBuilder
 					world1.ValueFormat = "0.0";
 
 					_controller.chart.Axes.Visible = false;
-				
 					_controller.chart.Footer.Font.Color = Color.FromArgb (255, 255, 255);
 					_controller.chart.Footer.Text = "index of eu15" + Steema.TeeChart.Utils.NewLine + "organic food consumption 2009";
 					_controller.chart.Footer.Font.Size = 8;
@@ -945,16 +605,14 @@ namespace TeeChartBuilder
 				default:
 					break;				
 				}
+
+				if (_controller.chart.Series [0].Count==0)
+					_controller.chart.Series [0].FillSampleValues ();
 			
 				// This is what the Settings does under Settings>Mail>Show on an iPhone
 				tableView.DeselectRow (indexPath, false);
 				_controller.NavigationController.PushViewController (_controller.chartController, true);	
 			}
-
-			//AlertCenter.Default.PostMessage ("Series Created!", "Click over Data button to add or edit the data values.",
-			  //                               UIImage.FromFile ("SeriesIcons/bar.png"), delegate {
-			//});
-
 		}		
 	}	
 }

@@ -1,25 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-#if __UNIFIED__
 using Foundation;
 using UIKit;
-#else
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
-#endif
 using Steema.TeeChart;
 using System.Drawing;
 
-
 namespace TeeChartBuilder
 {
-	
-
 	public partial class RootViewController : UIViewController
 	{
 		#region Constructors
-
 		UIButton button;
 		UIButton buttonStatistical;
 		UIButton buttonAbout;
@@ -34,8 +25,8 @@ namespace TeeChartBuilder
 
 			this.NavigationController.NavigationBar.BarTintColor = UIColor.Black;
 			this.NavigationController.NavigationBar.TintColor = UIColor.Gray;
-			this.NavigationController.NavigationBar.Translucent = true;
-			this.NavigationController.NavigationBar.Opaque = false;
+			this.NavigationController.NavigationBar.Translucent = false;
+			this.NavigationController.NavigationBar.Opaque = true;
 
 			this.NavigationItem.RightBarButtonItem=null;
  
@@ -48,7 +39,6 @@ namespace TeeChartBuilder
 			
      	    button.TouchDown += delegate(object sender, EventArgs e) {
 				NavigationController.NavigationBar.Hidden = false;
-				//NavigationController.SetNavigationBarHidden(false,true);
 				TypesTableController scontroller = new TypesTableController(false); 		  
 				NavigationController.PushViewController(scontroller,true);
 			};
@@ -117,4 +107,3 @@ namespace TeeChartBuilder
 		#endregion
 	}
 }
-

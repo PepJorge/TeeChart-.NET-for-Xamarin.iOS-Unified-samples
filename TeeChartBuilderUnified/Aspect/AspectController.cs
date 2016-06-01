@@ -1,11 +1,6 @@
 using System;
-#if __UNIFIED__
 using UIKit;
 using Foundation;
-#else
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
-#endif
 using System.Collections.Generic;
 using System.Drawing;
 using Steema.TeeChart;
@@ -35,7 +30,6 @@ namespace TeeChartBuilder
 			this.NavigationItem.SetRightBarButtonItem(button,true);
 	
             button.Clicked += delegate(object sender, EventArgs e) {			
-				//this.NavigationController.PopToRootViewController(true);
 				this.NavigationController.PopToViewController(chartController,true);
             };
 			

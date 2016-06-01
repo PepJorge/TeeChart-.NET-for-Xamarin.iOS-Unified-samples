@@ -1,12 +1,7 @@
 using System;
 using System.Drawing;
-#if __UNIFIED__
 using Foundation;
 using UIKit;
-#else
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
-#endif
 using System.Collections.Generic;
 
 namespace TeeChartBuilder
@@ -89,40 +84,22 @@ namespace TeeChartBuilder
 			};
 		}
 		
-#if __UNIFIED__
 		public override nint NumberOfSections (UITableView tableView)
-#else
-		public override int NumberOfSections (UITableView tableView)
-#endif
         {
-			// TODO: return the actual number of sections
 			return 1;
 		}
 		
-#if __UNIFIED__
 		public override nint RowsInSection (UITableView tableview, nint section)
-#else
-		public override int RowsInSection (UITableView tableview, int section)
-#endif
         {
-			// TODO: return the actual number of items in the section
 			return Items.Count;
 		}
 		
-#if __UNIFIED__
 		public override string TitleForHeader (UITableView tableView, nint section)
-#else
-		public override string TitleForHeader (UITableView tableView, int section)
-#endif
         {
 			return "Select the Series Style";
 		}
 		
-#if __UNIFIED__
 		public override string TitleForFooter (UITableView tableView, nint section)
-#else
-		public override string TitleForFooter (UITableView tableView, int section)
-#endif
         {
 			return Items.Count.ToString() + " Styles";
 		}

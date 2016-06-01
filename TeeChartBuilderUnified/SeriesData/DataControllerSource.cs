@@ -1,12 +1,7 @@
 using System;
 using System.Drawing;
-#if __UNIFIED__
 using Foundation;
 using UIKit;
-#else
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
-#endif
 using System.Collections.Generic;
 using Steema.TeeChart;
 
@@ -36,40 +31,22 @@ namespace TeeChartBuilder.SeriesData
 			}
 		}
 
-#if __UNIFIED__
 		public override nint NumberOfSections (UITableView tableView)
-#else
-		public override int NumberOfSections (UITableView tableView)
-#endif
         {
-			// TODO: return the actual number of sections
 			return 1;
 		}
 
-#if __UNIFIED__
 		public override nint RowsInSection (UITableView tableview, nint section)
-#else
-		public override int RowsInSection (UITableView tableview, int section)
-#endif
 		{
-			// TODO: return the actual number of items in the section
 			return seriesData.Count;
 		}
 
-#if __UNIFIED__
 		public override string TitleForHeader (UITableView tableView, nint section)
-#else
-		public override string TitleForHeader (UITableView tableView, int section)
-#endif
         {
 			return "Label and Value";
 		}
 
-#if __UNIFIED__
 		public override string TitleForFooter (UITableView tableView, nint section)
-#else
-		public override string TitleForFooter (UITableView tableView, int section)
-#endif
         {
 			return "";
 		}
@@ -80,7 +57,6 @@ namespace TeeChartBuilder.SeriesData
 			if (cell == null)
 				cell = new DataControllerCell ();
 
-			// TODO: populate the cell with the appropriate data based on the indexPath
 			cell.DetailTextLabel.Text = seriesData [indexPath.Row].YValue.ToString("0.00"); // "DetailsTextLabel";
 			cell.TextLabel.Text = seriesData [indexPath.Row].Label.ToString ();
 
@@ -118,7 +94,5 @@ namespace TeeChartBuilder.SeriesData
 		{
 			return UITableViewCellEditingStyle.Delete; // this example doesn't support Insert
 		}
-
 	}
 }
-

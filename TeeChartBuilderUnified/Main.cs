@@ -1,13 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-#if __UNIFIED__
 using Foundation;
 using UIKit;
-#else
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
-#endif
 
 namespace TeeChartBuilder
 {
@@ -27,8 +22,8 @@ namespace TeeChartBuilder
 		{
 			window.AddSubview (navigationController.View);
 			window.MakeKeyAndVisible ();
-			//navigationController.NavigationBar.Opaque = true;
-			//navigationController.NavigationBar.Translucent = false;
+			navigationController.NavigationBar.Opaque = true;
+			navigationController.NavigationBar.Translucent = false;
 
 			window.RootViewController = navigationController;
 			return true;
@@ -38,6 +33,5 @@ namespace TeeChartBuilder
 		public override void OnActivated (UIApplication application)
 		{
 		}	
-
 	}
-	}
+}

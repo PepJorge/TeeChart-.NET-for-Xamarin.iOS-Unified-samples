@@ -1,11 +1,6 @@
 using System;
-#if __UNIFIED__
 using UIKit;
 using Foundation;
-#else
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
-#endif
 using System.Collections.Generic;
 
 namespace TeeChartBuilder
@@ -66,20 +61,12 @@ namespace TeeChartBuilder
 			};
 		}
 		
-#if __UNIFIED__
 		public override string TitleForHeader (UITableView tableView, nint section)
-#else
-		public override string TitleForHeader (UITableView tableView, int section)
-#endif
         {
 			return "Tools";
 		}
 		
-#if __UNIFIED__
 		public override nint RowsInSection (UITableView tableview, nint section)
-#else
-		public override int RowsInSection (UITableView tableview, int section)
-#endif
         {
 			return Items.Count;
 		}
@@ -99,4 +86,3 @@ namespace TeeChartBuilder
 		}
 	}
 }
-

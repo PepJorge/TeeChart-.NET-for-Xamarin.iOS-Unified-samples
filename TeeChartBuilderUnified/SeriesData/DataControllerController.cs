@@ -1,16 +1,9 @@
 using System;
 using System.Drawing;
-#if __UNIFIED__
 using Foundation;
 using UIKit;
-#else
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
-#endif
 using Steema.TeeChart;
-#if !__UNIFIED__
 using MonoTouch.Dialog;
-#endif
 
 namespace TeeChartBuilder.SeriesData
 {
@@ -31,8 +24,6 @@ namespace TeeChartBuilder.SeriesData
 		{
 			// Releases the view if it doesn't have a superview.
 			base.DidReceiveMemoryWarning ();
-			
-			// Release any cached data, images, etc that aren't in use.
 		}
 
 		DataControllerSource dataController;
@@ -52,7 +43,6 @@ namespace TeeChartBuilder.SeriesData
 
 		private void ReloadData()
 		{
-            #if !__UNIFIED__
 			int xval = dataController.c.Series [0].Count;
 
 			try
@@ -90,12 +80,10 @@ namespace TeeChartBuilder.SeriesData
 			}
 			TableView.Source = dataController;
 			TableView.ReloadData();
-#endif
 		}
 
 		private void UpdateData(int row_sel)
 		{
-            #if !__UNIFIED__
 			int xval = dataController.c.Series [0].Count;
 
 			try
@@ -137,13 +125,9 @@ namespace TeeChartBuilder.SeriesData
 			TableView.Source = dataController;
 			dataController.c.DoInvalidate ();
 			TableView.ReloadData();
-#endif
 		}
 
-#if !__UNIFIED__                
 		EntryElement xvalue, yvalue, zvalue, xlabel;
-#endif
-
 		public void InsertData(bool series3D=false, bool update=false, int row_sel=0)
 		{
 			string capt = "Add data";
@@ -163,7 +147,6 @@ namespace TeeChartBuilder.SeriesData
 				lv = dataController.c.Series [0].Labels [row_sel].ToString();
 			}
 
-#if !__UNIFIED__  // TODO
 			if (series3D) {
                 DialogViewController a = new DialogViewController(new RootElement(capt) {
 					new Section ("Fill data"){
@@ -209,10 +192,6 @@ namespace TeeChartBuilder.SeriesData
 				}, true);
 				NavigationController.PushViewController (a,true);
 			}
-#endif
 		}
-
-	}
-	
+	}	
 }
-

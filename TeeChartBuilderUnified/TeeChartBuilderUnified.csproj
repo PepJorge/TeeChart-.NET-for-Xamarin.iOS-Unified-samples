@@ -3,8 +3,6 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{48791E6C-1037-49D8-BBAC-9E8CFB8AD00E}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
@@ -16,6 +14,7 @@ You can customize the appearance and theme, color palette and lots more characte
 This application also allows you to export the Chart generated to image, send it by e-mail or print it. 
 Enjoy it !</Description>
     <ApplicationIcon>TeeChartExamples.ico</ApplicationIcon>
+    <ReleaseVersion>2,0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,13 +28,11 @@ Enjoy it !</Description>
     <MtouchDebug>true</MtouchDebug>
     <ConsolePause>false</ConsolePause>
     <MtouchUseArmv7>false</MtouchUseArmv7>
-    <MtouchI18n>
-    </MtouchI18n>
     <ApplicationIcon>
     </ApplicationIcon>
-    <MtouchArch>ARMv7</MtouchArch>
-    <StartupObject>TeeChartBuilder.Application</StartupObject>
+    <MtouchArch>i386, x86_64</MtouchArch>
     <MtouchExtraArgs>--registrar=static</MtouchExtraArgs>
+    <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -50,18 +47,9 @@ Enjoy it !</Description>
     </ApplicationIcon>
     <MtouchI18n>
     </MtouchI18n>
-    <MtouchArch>Default, ARMv7</MtouchArch>
-    <StartupObject>TeeChartBuilder.Application</StartupObject>
+    <MtouchArch>ARMv7</MtouchArch>
     <MtouchExtraArgs>--registrar=static</MtouchExtraArgs>
     <MtouchSdkVersion>8.0</MtouchSdkVersion>
-    <MtouchDebug>False</MtouchDebug>
-    <MtouchProfiling>False</MtouchProfiling>
-    <MtouchFastDev>False</MtouchFastDev>
-    <MtouchEnableGenericValueTypeSharing>True</MtouchEnableGenericValueTypeSharing>
-    <MtouchUseLlvm>False</MtouchUseLlvm>
-    <MtouchUseThumb>False</MtouchUseThumb>
-    <MtouchUseSGen>False</MtouchUseSGen>
-    <MtouchUseRefCounting>False</MtouchUseRefCounting>
     <MtouchOptimizePNGs>True</MtouchOptimizePNGs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
@@ -75,8 +63,6 @@ Enjoy it !</Description>
     <CodesignKey>iPhone Developer: MARC MEUMANN (CTHAA979QZ)</CodesignKey>
     <ConsolePause>false</ConsolePause>
     <MtouchUseArmv7>false</MtouchUseArmv7>
-    <MtouchI18n>
-    </MtouchI18n>
     <IpaPackageName>
     </IpaPackageName>
     <ApplicationIcon>
@@ -84,8 +70,7 @@ Enjoy it !</Description>
     <MtouchDebug>true</MtouchDebug>
     <CrashReportingApiKey>
     </CrashReportingApiKey>
-    <MtouchArch>ARMv7</MtouchArch>
-    <StartupObject>TeeChartBuilder.Application</StartupObject>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>
@@ -94,37 +79,19 @@ Enjoy it !</Description>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Distribution: STEEMA SOFTWARE, S.L. (DF775JD7L6)</CodesignKey>
     <MtouchUseArmv7>false</MtouchUseArmv7>
-    <MtouchI18n>
-    </MtouchI18n>
     <ApplicationIcon>
     </ApplicationIcon>
     <IpaPackageName>
     </IpaPackageName>
     <CrashReportingApiKey>
     </CrashReportingApiKey>
-    <MtouchArch>Default, ARMv7</MtouchArch>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
     <DebugSymbols>true</DebugSymbols>
-    <StartupObject>TeeChartBuilder.Application</StartupObject>
-    <CodesignProvision>
-    </CodesignProvision>
-    <MtouchExtraArgs>
-    </MtouchExtraArgs>
+    <CodesignProvision>e7416fde-86ed-4d4d-90ba-f7c00b7d8c5d</CodesignProvision>
     <MtouchSdkVersion>8.1</MtouchSdkVersion>
-    <MtouchLink>SdkOnly</MtouchLink>
-    <MtouchDebug>False</MtouchDebug>
-    <MtouchProfiling>False</MtouchProfiling>
-    <MtouchFastDev>False</MtouchFastDev>
-    <MtouchEnableGenericValueTypeSharing>True</MtouchEnableGenericValueTypeSharing>
-    <MtouchUseLlvm>False</MtouchUseLlvm>
-    <MtouchUseThumb>False</MtouchUseThumb>
-    <MtouchUseSGen>False</MtouchUseSGen>
-    <MtouchUseRefCounting>False</MtouchUseRefCounting>
     <MtouchOptimizePNGs>False</MtouchOptimizePNGs>
-    <CodesignEntitlements />
-    <CodesignResourceRules />
-    <CodesignExtraArgs />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Distribution|iPhone' ">
     <Optimize>false</Optimize>
@@ -132,25 +99,21 @@ Enjoy it !</Description>
     <WarningLevel>4</WarningLevel>
     <CodesignKey>iPhone Distribution: STEEMA SOFTWARE, S.L. (DF775JD7L6)</CodesignKey>
     <CodesignProvision>2D9B3842-B310-4123-9565-9DA6B5D42CD4</CodesignProvision>
-    <MtouchI18n>
-    </MtouchI18n>
-    <MtouchArch>ARMv7</MtouchArch>
+    <MtouchArch>ARMv7s, ARM64</MtouchArch>
     <IpaPackageName>
     </IpaPackageName>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AlertCenter.IOS">
-      <HintPath>..\..\..\Sources\TeeChart.iOS.Unified\Components\alert-center-1.0.1\lib\ios\AlertCenter.IOS.dll</HintPath>
-    </Reference>
     <Reference Include="MonoTouch.Dialog-1" />
     <Reference Include="OpenTK-1.0" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="Xamarin.iOS, Version=0.0.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065, processorArchitecture=MSIL">
+    <Reference Include="TeeChart.iOS.Unified, Version=4.16.5.30, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Xamarin.iOS\v1.0\Xamarin.iOS.dll</HintPath>
+      <HintPath>..\..\TeeChart.iOS.Unified.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -214,6 +177,7 @@ Enjoy it !</Description>
       <DependentUpon>AboutViewController.xib</DependentUpon>
     </Compile>
     <Compile Include="SeriesData\DataDelegate.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainWindow.xib" />
@@ -432,9 +396,13 @@ Enjoy it !</Description>
     <Content Include="images\TeeChartBuilder.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <BundleResource Include="Resources\Icon.png" />
+    <BundleResource Include="Resources\Icon-Small.png" />
+    <BundleResource Include="Resources\Icon-Small%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="images\logo512x512.png" />
+    <ITunesArtwork Include="iTunesArtwork%402x" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="alert-center">
@@ -450,14 +418,6 @@ Enjoy it !</Description>
     <BundleResource Include="images\logo_640x960.png" />
     <BundleResource Include="Resources\Default.png" />
     <BundleResource Include="Resources\Default%402x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Sources\TeeChart.iOS.Unified\TeeChart.iOS20.Unified.csproj">
-      <Project>{0c636370-38a4-49f8-be6c-8fa9638974c9}</Project>
-      <Name>TeeChart.iOS20.Unified</Name>
-      <IsAppExtension>false</IsAppExtension>
-      <IsWatchApp>false</IsWatchApp>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
