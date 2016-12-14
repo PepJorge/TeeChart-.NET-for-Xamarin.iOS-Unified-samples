@@ -32,6 +32,9 @@ TeeChart for Xamarin.iOS offers two ways to add this functionality.
    	View.AddSubview(Chart);
    	View.AddSubview(slider1);
 ```
+![screenshot](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/tree/master/Chart_Scroll/Screenshots/Chart_Scroll.png?raw=true "TeeChart.Net for Xamarin.iOS")
+
+
 This example also shows how to modify the size of the labels on the left axis of the Chart, so that we can choose the space to leave between the axis title and the labels.
 
 ------
