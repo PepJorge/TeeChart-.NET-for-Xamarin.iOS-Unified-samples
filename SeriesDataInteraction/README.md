@@ -18,6 +18,8 @@ await Task.Delay(1000);
 annotation.Active = false;
 // Also async to the ClickSeries method is required.
 ```
+![screenshot](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/blob/master/SeriesDataInteraction/Screenshots/Chart_SeriesDataInteraction.gif?raw=true "TeeChart.NET for Xamarin.iOS-Unified samples")
+
 It also shows how to customise the aspect of the Chart in order to give a more professional appearance. Among which we have added a colour gradient, hidden some parts of the axes, the Seeries used as "smooth", vaious colours assigned to different parts of the Chart (labels, axes, grid lines,annotation, callout, etc). In addition it shows how to assign a specific text to the Legend.
 
 ------
