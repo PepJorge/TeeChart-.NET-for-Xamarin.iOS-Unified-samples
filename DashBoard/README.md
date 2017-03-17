@@ -9,7 +9,7 @@ Create your own DashBoards the way you want in just a few minutes.
 
 In order to try the demo you have Xamarin.iOS installed.
 
-[![screenshot](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/blob/master/DashBoard/Screenshots/Screenshot1a.png "TeeChart.Net for Xamarin.iOS")](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/blob/master/DashBoard/Screenshots/Screenshot.png)
+[![screenshot](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/blob/master/DashBoard/Screenshots/Screenshot1a.png "TeeChart.Net for Xamarin.iOS")](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/blob/master/DashBoard/Screenshots/Screenshot1.png)
 
 ------
 ### Author
