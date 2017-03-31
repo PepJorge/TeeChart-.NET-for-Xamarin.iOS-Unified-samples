@@ -1,5 +1,5 @@
-MultipleCustomAxes Demo
-=======================
+Multiple Custom Axes Demo
+=========================
 
 This demo shows you how to create multiple custom axes on your charts.
 

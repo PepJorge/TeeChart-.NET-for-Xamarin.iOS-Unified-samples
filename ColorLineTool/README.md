@@ -1,4 +1,4 @@
-ColorLineTool Demo
+ColorLine Tool Demo
 =================
 
 The ColorLineTool Demo gives you further insight into how to draw custom lines at a particular axis value.

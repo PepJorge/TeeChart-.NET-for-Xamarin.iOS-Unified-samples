@@ -1,4 +1,4 @@
-TChartIpad Demo
+TChart Ipad Demo
 ===============
 
 
