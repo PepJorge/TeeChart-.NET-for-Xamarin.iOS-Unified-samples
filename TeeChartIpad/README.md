@@ -1,6 +1,7 @@
 TChart Ipad Demo
 ===============
 
+Sample demos.
 
 ------
 ### Author
