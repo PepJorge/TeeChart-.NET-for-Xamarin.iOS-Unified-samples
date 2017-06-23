@@ -6,6 +6,7 @@ The TeeChart Charting components for Xamarin.iOS offer a wide range of common an
 
 This repository contains sample programs showing how to use TeeChart NET for Xamarin.iOS applications. Here you can find an array of samples to demonstrate how TeeChart can enhance your iOS applications and to help you get the most from you Charts.
 
+ ![screenshot](https://www.steema.com/uploads/products/TeeChartIOS_iPad2.png?raw=true "iOS - iPad Dashboard")
 
 ### Sample Requirements
 
