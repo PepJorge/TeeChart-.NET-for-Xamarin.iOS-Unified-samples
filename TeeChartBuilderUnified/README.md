@@ -9,14 +9,14 @@ This application also allows you to export the Chart generated to image, send it
 For further information visit https://www.steema.com/product/net_ios
 #### iPhone screenshots
 
-|![screenshot](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/blob/master/TeeChartBuilderUnified/Screenshots/features1.png?raw=true "3D Pie")
+![screenshot](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/blob/master/TeeChartBuilderUnified/Screenshots/features1.png?raw=true "3D Pie")
 
-|Gauge|Area|Bubble|Gantt|
-|-----|----|------|-----|
+Gauge|Area|Bubble|Gantt
+-----|----|------|-----
 |![screenshot](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/blob/master/TeeChartBuilderUnified/Screenshots/features2.png?raw=true "Gauge")|![screenshot](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/blob/master/TeeChartBuilderUnified/Screenshots/features4.png?raw=true "Area")|![screenshot](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/blob/master/TeeChartBuilderUnified/Screenshots/features5.png?raw=true "Bubble")|![screenshot](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/blob/master/TeeChartBuilderUnified/Screenshots/features6.png?raw=true "Gantt")|
 
-|Exploded Donut|3D Donut|
-|--------------|----|
+Exploded Donut|3D Donut
+--------------|----
 |![screenshot](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/blob/master/TeeChartBuilderUnified/Screenshots/features3.png?raw=true "Exploded Donut")|![screenshot](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/blob/master/TeeChartBuilderUnified/Screenshots/features7.png?raw=true "3D Donut")
 
 ### Requirements

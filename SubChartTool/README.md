@@ -42,6 +42,11 @@ Example code to create and use of the SubChart Tool:
  	            subChartTool1.Charts[0].Width = 325;
 
 [![screenshot](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/blob/master/SubChartTool/Screenshots/SubChartTool1.png)](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/blob/master/SubChartTool/Screenshots/SubChartTool.png "TeeChart.Net for Xamarin.iOS")
+
+### Requirements
+
+You'll need TeeChart NET for Xamarin.iOS evaluation or registered version to run the example on this repository. Fully functional evaluation version can be obtained at https://www.steema.com/downloads/net_ios
+
 ---------------------
 
 ------

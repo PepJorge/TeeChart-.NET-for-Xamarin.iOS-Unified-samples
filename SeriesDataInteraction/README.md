@@ -22,6 +22,10 @@ annotation.Active = false;
 
 It also shows how to customise the aspect of the Chart in order to give a more professional appearance. Among which we have added a colour gradient, hidden some parts of the axes, the Seeries used as "smooth", vaious colours assigned to different parts of the Chart (labels, axes, grid lines,annotation, callout, etc). In addition it shows how to assign a specific text to the Legend.
 
+### Requirements
+
+You'll need TeeChart NET for Xamarin.iOS evaluation or registered version to run the example on this repository. Fully functional evaluation version can be obtained at https://www.steema.com/downloads/net_ios
+
 ------
 ### Author
 ------
