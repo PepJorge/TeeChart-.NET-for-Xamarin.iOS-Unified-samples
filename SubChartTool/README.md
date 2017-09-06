@@ -47,8 +47,6 @@ Example code to create and use of the SubChart Tool:
 
 You'll need TeeChart NET for Xamarin.iOS evaluation or registered version to run the example on this repository. Fully functional evaluation version can be obtained at https://www.steema.com/downloads/net_ios
 
----------------------
-
 ------
 ### Author
 ------
