@@ -8,5 +8,15 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>CFBundleDisplayName</key>
+	<string>MultipleCustomAxes</string>
+	<key>CFBundleIdentifier</key>
+	<string>MultipleCustomAxes</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>MinimumOSVersion</key>
+	<string>11.2</string>
 </dict>
 </plist>
