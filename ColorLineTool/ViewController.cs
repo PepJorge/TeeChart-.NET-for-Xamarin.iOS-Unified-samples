@@ -39,6 +39,7 @@ namespace ColorLineTool
             colorlinetTool.Pen.Width = 2;
             colorlinetTool.ColorLineClickTolerance = 10;
             colorlinetTool.AllowDrag = true;
+			colorlinetTool.DragRepaint = true;
 
             tChart1.Panning.Active = true;
             tChart1.Panning.Allow = ScrollModes.Both;
