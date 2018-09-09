@@ -8,7 +8,7 @@ ColorLine Tool Demo
 The ColorLineTool Demo gives you further insight into how to draw custom lines at a particular axis value.
 The ColorLine Tool adds colored lines to the Chart which can be set vertically or horizontally in line with the axis values.
 
-![ColorLineTool](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/blob/master/ColorLineTool/Screenshots/ColorLineTool.gif "TeeChart-.NET-for-Xamarin.iOS-Unified-samples)
+![ColorLineTool](https://github.com/Steema/TeeChart-.NET-for-Xamarin.iOS-Unified-samples/blob/master/ColorLineTool/Screenshots/ColorLineTool.gif "TeeChart-.NET-for-Xamarin.iOS-Unified-samples")
 
 #### Sample Requirements
 
